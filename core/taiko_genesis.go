@@ -14,11 +14,19 @@ var (
 	PreconfDevnetOntakeBlock  = common.Big0
 	HeklaOntakeBlock          = new(big.Int).SetUint64(840_512)
 	MainnetOntakeBlock        = new(big.Int).SetUint64(538_304)
+	// Surge
+	SurgeSepoliaOntakeBlock = common.Big0
+	SurgeHoleskyOntakeBlock = common.Big0
+	SurgeMainnetOntakeBlock = common.Big0
 
 	InternalDevnetPacayaBlock = new(big.Int).SetUint64(10)
 	PreconfDevnetPacayaBlock  = common.Big0
 	HeklaPacayaBlock          = new(big.Int).SetUint64(999_999_999_999)
 	MainnetPacayaBlock        = new(big.Int).SetUint64(999_999_999_999)
+	// Surge
+	SurgeSepoliaPacayaBlock = new(big.Int).SetUint64(999_999_999_999)
+	SurgeHoleskyPacayaBlock = common.Big0
+	SurgeMainnetPacayaBlock = common.Big0
 )
 
 // TaikoGenesisBlock returns the Taiko network genesis block configs.
@@ -68,6 +76,21 @@ func TaikoGenesisBlock(networkID uint64) *Genesis {
 		chainConfig.OntakeBlock = PreconfDevnetOntakeBlock
 		chainConfig.PacayaBlock = PreconfDevnetPacayaBlock
 		allocJSON = taikoGenesis.PreconfDevnetGenesisAllocJSON
+	case params.SurgeMainnetNetworkID.Uint64():
+		chainConfig.ChainID = params.SurgeMainnetNetworkID
+		chainConfig.OntakeBlock = SurgeMainnetOntakeBlock
+		chainConfig.PacayaBlock = SurgeMainnetPacayaBlock
+		allocJSON = taikoGenesis.SurgeMainnetGenesisAllocJSON
+	case params.SurgeSepoliaNetworkID.Uint64():
+		chainConfig.ChainID = params.SurgeSepoliaNetworkID
+		chainConfig.OntakeBlock = SurgeSepoliaOntakeBlock
+		chainConfig.PacayaBlock = SurgeSepoliaPacayaBlock
+		allocJSON = taikoGenesis.SurgeSepoliaGenesisAllocJSON
+	case params.SurgeHoleskyNetworkID.Uint64():
+		chainConfig.ChainID = params.SurgeHoleskyNetworkID
+		chainConfig.OntakeBlock = SurgeHoleskyOntakeBlock
+		chainConfig.PacayaBlock = SurgeHoleskyPacayaBlock
+		allocJSON = taikoGenesis.SurgeHoleskyGenesisAllocJSON
 	default:
 		chainConfig.ChainID = params.TaikoInternalL2ANetworkID
 		chainConfig.OntakeBlock = InternalDevnetOntakeBlock
