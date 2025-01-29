@@ -32,7 +32,7 @@ var (
 	TaikoL2AddressSuffix = "10001"
 	AnchorSelector       = crypto.Keccak256([]byte("anchor(bytes32,bytes32,uint64,uint32)"))[:4]
 	AnchorV2Selector     = crypto.Keccak256(
-		[]byte("anchorV2(uint64,bytes32,uint32,(uint8,uint8,uint32,uint64,uint32))"),
+		[]byte("anchorV2(uint64,bytes32,uint32,(uint8,uint8,uint32,uint64,uint64))"),
 	)[:4]
 	AnchorGasLimit = uint64(250_000)
 )
