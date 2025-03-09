@@ -31,7 +31,18 @@ var (
 
 // TaikoGenesisBlock returns the Taiko network genesis block configs.
 func TaikoGenesisBlock(networkID uint64) *Genesis {
-	chainConfig := params.TaikoChainConfig
+	var chainConfig *params.ChainConfig
+	switch networkID {
+	case params.SurgeMainnetNetworkID.Uint64():
+		chainConfig = params.SurgeMainnetChainConfig
+	case params.SurgeHoleskyNetworkID.Uint64():
+		chainConfig = params.SurgeHoleskyChainConfig
+	case params.SurgeSepoliaNetworkID.Uint64():
+		chainConfig = params.SurgeSepoliaChainConfig
+	default:
+		chainConfig = params.TaikoChainConfig
+	}
+	chainConfig = params.TaikoChainConfig
 
 	var allocJSON []byte
 	switch networkID {

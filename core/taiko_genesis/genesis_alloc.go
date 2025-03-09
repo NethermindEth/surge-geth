@@ -38,10 +38,10 @@ var MainnetGenesisAllocJSON []byte
 var PreconfDevnetGenesisAllocJSON []byte
 
 //go:embed surge_sepolia_genesis.json
-var SurgeSepoliaGenesisAllocJSON = []byte
+var SurgeSepoliaGenesisAllocJSON []byte
 
 //go:embed surge_holesky_genesis.json
-var SurgeHoleskyGenesisAllocJSON = []byte
+var SurgeHoleskyGenesisAllocJSON []byte
 
 //go:embed surge_mainnet_genesis.json
-var SurgeMainnetGenesisAllocJSON = []byte
+var SurgeMainnetGenesisAllocJSON []byte

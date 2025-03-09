@@ -67,6 +67,21 @@ func TestNetworkIDToChainConfigOrDefault(t *testing.T) {
 			TaikoChainConfig,
 		},
 		{
+			"SurgeMainnetNetworkID",
+			SurgeMainnetNetworkID,
+			SurgeMainnetChainConfig,
+		},
+		{
+			"SurgeHoleskyNetworkID",
+			SurgeHoleskyNetworkID,
+			SurgeHoleskyChainConfig,
+		},
+		{
+			"SurgeSepoliaNetworkID",
+			SurgeSepoliaNetworkID,
+			SurgeSepoliaChainConfig,
+		},
+		{
 			"mainnet",
 			MainnetChainConfig.ChainID,
 			MainnetChainConfig,
