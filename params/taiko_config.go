@@ -50,8 +50,8 @@ var (
 	PreconfDevnetNetworkID    = big.NewInt(167010)
 	MasayaDevnetNetworkID     = big.NewInt(167011)
 	SurgeMainnetNetworkID     = big.NewInt(763373)
-	SurgeHoleskyNetworkID     = big.NewInt(763374)
-	SurgeSepoliaNetworkID     = big.NewInt(763375)
+	SurgeDevnetNetworkID      = big.NewInt(763374)
+	SurgeTestnetNetworkID     = big.NewInt(763375)
 )
 
 var networkIDToChainConfig = map[*big.Int]*ChainConfig{
@@ -68,8 +68,8 @@ var networkIDToChainConfig = map[*big.Int]*ChainConfig{
 	PreconfDevnetNetworkID:     TaikoChainConfig,
 	MasayaDevnetNetworkID:      TaikoChainConfig,
 	SurgeMainnetNetworkID:      SurgeMainnetChainConfig,
-	SurgeHoleskyNetworkID:      SurgeHoleskyChainConfig,
-	SurgeSepoliaNetworkID:      SurgeSepoliaChainConfig,
+	SurgeDevnetNetworkID:       SurgeDevnetChainConfig,
+	SurgeTestnetNetworkID:      SurgeTestnetChainConfig,
 	MainnetChainConfig.ChainID: MainnetChainConfig,
 	SepoliaChainConfig.ChainID: SepoliaChainConfig,
 	TestChainConfig.ChainID:    TestChainConfig,
@@ -120,7 +120,7 @@ var SurgeMainnetChainConfig = &ChainConfig{
 	Taiko:                   true,
 }
 
-var SurgeHoleskyChainConfig = &ChainConfig{
+var SurgeDevnetChainConfig = &ChainConfig{
 	ChainID:                 TaikoInternalL2ANetworkID, // Use Internal Devnet network ID by default.
 	HomesteadBlock:          common.Big0,
 	EIP150Block:             common.Big0,
@@ -138,7 +138,7 @@ var SurgeHoleskyChainConfig = &ChainConfig{
 	Taiko:                   true,
 }
 
-var SurgeSepoliaChainConfig = &ChainConfig{
+var SurgeTestnetChainConfig = &ChainConfig{
 	ChainID:                 TaikoInternalL2ANetworkID, // Use Internal Devnet network ID by default.
 	HomesteadBlock:          common.Big0,
 	EIP150Block:             common.Big0,
