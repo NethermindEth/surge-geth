@@ -49,6 +49,9 @@ var (
 	HeklaNetworkID            = big.NewInt(167009)
 	PreconfDevnetNetworkID    = big.NewInt(167010)
 	MasayaDevnetNetworkID     = big.NewInt(167011)
+	SurgeMainnetNetworkID     = big.NewInt(763373)
+	SurgeHoleskyNetworkID     = big.NewInt(763374)
+	SurgeSepoliaNetworkID     = big.NewInt(763375)
 )
 
 var networkIDToChainConfig = map[*big.Int]*ChainConfig{
@@ -64,6 +67,9 @@ var networkIDToChainConfig = map[*big.Int]*ChainConfig{
 	HeklaNetworkID:             TaikoChainConfig,
 	PreconfDevnetNetworkID:     TaikoChainConfig,
 	MasayaDevnetNetworkID:      TaikoChainConfig,
+	SurgeMainnetNetworkID:      SurgeMainnetChainConfig,
+	SurgeHoleskyNetworkID:      SurgeHoleskyChainConfig,
+	SurgeSepoliaNetworkID:      SurgeSepoliaChainConfig,
 	MainnetChainConfig.ChainID: MainnetChainConfig,
 	SepoliaChainConfig.ChainID: SepoliaChainConfig,
 	TestChainConfig.ChainID:    TestChainConfig,
@@ -79,6 +85,60 @@ func NetworkIDToChainConfigOrDefault(networkID *big.Int) *ChainConfig {
 }
 
 var TaikoChainConfig = &ChainConfig{
+	ChainID:                 TaikoInternalL2ANetworkID, // Use Internal Devnet network ID by default.
+	HomesteadBlock:          common.Big0,
+	EIP150Block:             common.Big0,
+	EIP155Block:             common.Big0,
+	EIP158Block:             common.Big0,
+	ByzantiumBlock:          common.Big0,
+	ConstantinopleBlock:     common.Big0,
+	PetersburgBlock:         common.Big0,
+	IstanbulBlock:           common.Big0,
+	BerlinBlock:             common.Big0,
+	LondonBlock:             common.Big0,
+	ShanghaiTime:            u64(0),
+	MergeNetsplitBlock:      nil,
+	TerminalTotalDifficulty: common.Big0,
+	Taiko:                   true,
+}
+
+var SurgeMainnetChainConfig = &ChainConfig{
+	ChainID:                 TaikoInternalL2ANetworkID, // Use Internal Devnet network ID by default.
+	HomesteadBlock:          common.Big0,
+	EIP150Block:             common.Big0,
+	EIP155Block:             common.Big0,
+	EIP158Block:             common.Big0,
+	ByzantiumBlock:          common.Big0,
+	ConstantinopleBlock:     common.Big0,
+	PetersburgBlock:         common.Big0,
+	IstanbulBlock:           common.Big0,
+	BerlinBlock:             common.Big0,
+	LondonBlock:             common.Big0,
+	ShanghaiTime:            u64(0),
+	MergeNetsplitBlock:      nil,
+	TerminalTotalDifficulty: common.Big0,
+	Taiko:                   true,
+}
+
+var SurgeHoleskyChainConfig = &ChainConfig{
+	ChainID:                 TaikoInternalL2ANetworkID, // Use Internal Devnet network ID by default.
+	HomesteadBlock:          common.Big0,
+	EIP150Block:             common.Big0,
+	EIP155Block:             common.Big0,
+	EIP158Block:             common.Big0,
+	ByzantiumBlock:          common.Big0,
+	ConstantinopleBlock:     common.Big0,
+	PetersburgBlock:         common.Big0,
+	IstanbulBlock:           common.Big0,
+	BerlinBlock:             common.Big0,
+	LondonBlock:             common.Big0,
+	ShanghaiTime:            u64(0),
+	MergeNetsplitBlock:      nil,
+	TerminalTotalDifficulty: common.Big0,
+	Taiko:                   true,
+}
+
+var SurgeSepoliaChainConfig = &ChainConfig{
 	ChainID:                 TaikoInternalL2ANetworkID, // Use Internal Devnet network ID by default.
 	HomesteadBlock:          common.Big0,
 	EIP150Block:             common.Big0,
