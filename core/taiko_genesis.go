@@ -5,6 +5,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	taikoGenesis "github.com/ethereum/go-ethereum/core/taiko_genesis"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/params"
 )
@@ -17,9 +18,9 @@ var (
 	MainnetOntakeBlock        = new(big.Int).SetUint64(538_304)
 
 	// Surge
-	SurgeTestnetOntakeBlock = common.Big0
-	SurgeDevnetOntakeBlock  = common.Big0
-	SurgeMainnetOntakeBlock = common.Big0
+	SurgeTestnetOntakeBlock = common.Big1
+	SurgeDevnetOntakeBlock  = common.Big1
+	SurgeMainnetOntakeBlock = common.Big1
 
 	InternalDevnetPacayaBlock = new(big.Int).SetUint64(0)
 	PreconfDevnetPacayaBlock  = common.Big0
@@ -28,10 +29,26 @@ var (
 	MainnetPacayaBlock        = new(big.Int).SetUint64(1_166_000)
 
 	// Surge
-	SurgeTestnetPacayaBlock = common.Big0
-	SurgeDevnetPacayaBlock  = common.Big0
-	SurgeMainnetPacayaBlock = common.Big0
+	SurgeTestnetPacayaBlock = common.Big1
+	SurgeDevnetPacayaBlock  = common.Big1
+	SurgeMainnetPacayaBlock = common.Big1
+
+	// ContractOwner is the address that will be embedded in the genesis extraData
+	ContractOwner = common.HexToAddress("0xdf08f82de32b8d460adbe8d72043e3a7e25a3b39")
 )
+
+// generateCliqueExtraData creates the extraData structure
+func generateCliqueExtraData(signer common.Address) []byte {
+	const extraVanity = 32
+
+	totalSize := extraVanity + common.AddressLength + crypto.SignatureLength
+	extraData := make([]byte, totalSize)
+
+	// Signer address starts after vanity
+	copy(extraData[extraVanity:extraVanity+common.AddressLength], signer.Bytes())
+
+	return extraData
+}
 
 // TaikoGenesisBlock returns the Taiko network genesis block configs.
 func TaikoGenesisBlock(networkID uint64) *Genesis {
@@ -122,13 +139,14 @@ func TaikoGenesisBlock(networkID uint64) *Genesis {
 		log.Crit("unmarshal alloc json error", "error", err)
 	}
 
+	extraData := generateCliqueExtraData(ContractOwner)
+
 	return &Genesis{
 		Config:     chainConfig,
-		ExtraData:  []byte{},
-		GasLimit:   uint64(15_000_000),
+		ExtraData:  extraData,
+		GasLimit:   uint64(30_000_000),
 		Difficulty: common.Big0,
 		Alloc:      alloc,
 		GasUsed:    0,
-		BaseFee:    new(big.Int).SetUint64(10_000_000),
 	}
 }
