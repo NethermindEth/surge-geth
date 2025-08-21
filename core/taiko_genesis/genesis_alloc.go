@@ -39,3 +39,12 @@ var PreconfDevnetGenesisAllocJSON []byte
 
 //go:embed masaya.json
 var MasayaGenesisAllocJSON []byte
+
+//go:embed surge_testnet_genesis.json
+var SurgeTestnetGenesisAllocJSON []byte
+
+//go:embed surge_devnet_genesis.json
+var SurgeDevnetGenesisAllocJSON []byte
+
+//go:embed surge_mainnet_genesis.json
+var SurgeMainnetGenesisAllocJSON []byte

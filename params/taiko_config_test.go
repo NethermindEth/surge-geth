@@ -67,6 +67,21 @@ func TestNetworkIDToChainConfigOrDefault(t *testing.T) {
 			TaikoChainConfig,
 		},
 		{
+			"SurgeMainnetNetworkID",
+			SurgeMainnetNetworkID,
+			SurgeMainnetChainConfig,
+		},
+		{
+			"SurgeDevnetNetworkID",
+			SurgeDevnetNetworkID,
+			SurgeDevnetChainConfig,
+		},
+		{
+			"SurgeTestnetNetworkID",
+			SurgeTestnetNetworkID,
+			SurgeTestnetChainConfig,
+		},
+		{
 			"mainnet",
 			MainnetChainConfig.ChainID,
 			MainnetChainConfig,

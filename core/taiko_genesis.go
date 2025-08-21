@@ -5,6 +5,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	taikoGenesis "github.com/ethereum/go-ethereum/core/taiko_genesis"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/params"
 )
@@ -16,16 +17,52 @@ var (
 	HeklaOntakeBlock          = new(big.Int).SetUint64(840_512)
 	MainnetOntakeBlock        = new(big.Int).SetUint64(538_304)
 
+	// Surge
+	SurgeTestnetOntakeBlock = common.Big1
+	SurgeDevnetOntakeBlock  = common.Big1
+	SurgeMainnetOntakeBlock = common.Big1
+
 	InternalDevnetPacayaBlock = new(big.Int).SetUint64(0)
 	PreconfDevnetPacayaBlock  = common.Big0
 	MasayaDevnetPacayaBlock   = common.Big0
 	HeklaPacayaBlock          = new(big.Int).SetUint64(1_299_888)
 	MainnetPacayaBlock        = new(big.Int).SetUint64(1_166_000)
+
+	// Surge
+	SurgeTestnetPacayaBlock = common.Big1
+	SurgeDevnetPacayaBlock  = common.Big1
+	SurgeMainnetPacayaBlock = common.Big1
+
+	// ContractOwner is the address that will be embedded in the genesis extraData
+	ContractOwner = common.HexToAddress("0xdf08f82de32b8d460adbe8d72043e3a7e25a3b39")
 )
+
+// generateCliqueExtraData creates the extraData structure
+func generateCliqueExtraData(signer common.Address) []byte {
+	const extraVanity = 32
+
+	totalSize := extraVanity + common.AddressLength + crypto.SignatureLength
+	extraData := make([]byte, totalSize)
+
+	// Signer address starts after vanity
+	copy(extraData[extraVanity:extraVanity+common.AddressLength], signer.Bytes())
+
+	return extraData
+}
 
 // TaikoGenesisBlock returns the Taiko network genesis block configs.
 func TaikoGenesisBlock(networkID uint64) *Genesis {
-	chainConfig := params.TaikoChainConfig
+	var chainConfig *params.ChainConfig
+	switch networkID {
+	case params.SurgeMainnetNetworkID.Uint64():
+		chainConfig = params.SurgeMainnetChainConfig
+	case params.SurgeDevnetNetworkID.Uint64():
+		chainConfig = params.SurgeDevnetChainConfig
+	case params.SurgeTestnetNetworkID.Uint64():
+		chainConfig = params.SurgeTestnetChainConfig
+	default:
+		chainConfig = params.TaikoChainConfig
+	}
 
 	var allocJSON []byte
 	switch networkID {
@@ -75,6 +112,21 @@ func TaikoGenesisBlock(networkID uint64) *Genesis {
 		chainConfig.OntakeBlock = MasayaDevnetOntakeBlock
 		chainConfig.PacayaBlock = MasayaDevnetPacayaBlock
 		allocJSON = taikoGenesis.MasayaGenesisAllocJSON
+	case params.SurgeMainnetNetworkID.Uint64():
+		chainConfig.ChainID = params.SurgeMainnetNetworkID
+		chainConfig.OntakeBlock = SurgeMainnetOntakeBlock
+		chainConfig.PacayaBlock = SurgeMainnetPacayaBlock
+		allocJSON = taikoGenesis.SurgeMainnetGenesisAllocJSON
+	case params.SurgeTestnetNetworkID.Uint64():
+		chainConfig.ChainID = params.SurgeTestnetNetworkID
+		chainConfig.OntakeBlock = SurgeTestnetOntakeBlock
+		chainConfig.PacayaBlock = SurgeTestnetPacayaBlock
+		allocJSON = taikoGenesis.SurgeTestnetGenesisAllocJSON
+	case params.SurgeDevnetNetworkID.Uint64():
+		chainConfig.ChainID = params.SurgeDevnetNetworkID
+		chainConfig.OntakeBlock = SurgeDevnetOntakeBlock
+		chainConfig.PacayaBlock = SurgeDevnetPacayaBlock
+		allocJSON = taikoGenesis.SurgeDevnetGenesisAllocJSON
 	default:
 		chainConfig.ChainID = params.TaikoInternalL2ANetworkID
 		chainConfig.OntakeBlock = InternalDevnetOntakeBlock
@@ -87,13 +139,14 @@ func TaikoGenesisBlock(networkID uint64) *Genesis {
 		log.Crit("unmarshal alloc json error", "error", err)
 	}
 
+	extraData := generateCliqueExtraData(ContractOwner)
+
 	return &Genesis{
 		Config:     chainConfig,
-		ExtraData:  []byte{},
-		GasLimit:   uint64(15_000_000),
+		ExtraData:  extraData,
+		GasLimit:   uint64(30_000_000),
 		Difficulty: common.Big0,
 		Alloc:      alloc,
 		GasUsed:    0,
-		BaseFee:    new(big.Int).SetUint64(10_000_000),
 	}
 }
