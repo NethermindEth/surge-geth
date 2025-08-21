@@ -690,6 +690,10 @@ func (st *stateTransition) blobGasUsed() uint64 {
 
 // CHANGE(taiko): returns the treasury address
 func (st *stateTransition) getTreasuryAddress() common.Address {
+	// Use the FeeCollector, if available in the chain config.
+	if st.evm.ChainConfig().Taiko && st.evm.ChainConfig().FeeCollector != nil {
+		return *st.evm.ChainConfig().FeeCollector
+	}
 	return common.Address{}
 }
 

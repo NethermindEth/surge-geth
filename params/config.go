@@ -414,9 +414,10 @@ type ChainConfig struct {
 	BlobScheduleConfig *BlobScheduleConfig `json:"blobSchedule,omitempty"`
 
 	// CHANGE(taiko): Taiko network flag.
-	Taiko       bool     `json:"taiko"`
-	OntakeBlock *big.Int `json:"ontakeBlock,omitempty"` // Ontake switch block (nil = no fork, 0 = already activated)
-	PacayaBlock *big.Int `json:"pacayaBlock,omitempty"` // Pacaya switch block (nil = no fork, 0 = already activated)
+	Taiko        bool            `json:"taiko"`
+	OntakeBlock  *big.Int        `json:"ontakeBlock,omitempty"` // Ontake switch block (nil = no fork, 0 = already activated)
+	PacayaBlock  *big.Int        `json:"pacayaBlock,omitempty"` // Pacaya switch block (nil = no fork, 0 = already activated)
+	FeeCollector *common.Address `json:"feeCollector,omitempty"`
 }
 
 // EthashConfig is the consensus engine configs for proof-of-work based sealing.
