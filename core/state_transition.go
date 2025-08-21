@@ -21,7 +21,6 @@ import (
 	"fmt"
 	"math"
 	"math/big"
-	"strings"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/tracing"
@@ -689,18 +688,13 @@ func (st *stateTransition) blobGasUsed() uint64 {
 	return uint64(len(st.msg.BlobHashes) * params.BlobTxBlobGasPerBlob)
 }
 
-// CHANGE(taiko): returns the treasury address based on chain ID.
+// CHANGE(taiko): returns the treasury address
 func (st *stateTransition) getTreasuryAddress() common.Address {
-	var (
-		prefix = st.evm.ChainConfig().ChainID.String()
-		suffix = "10001"
-	)
-	return common.HexToAddress(
-		"0x" +
-			prefix +
-			strings.Repeat("0", common.AddressLength*2-len(prefix)-len(suffix)) +
-			suffix,
-	)
+	// Use the FeeCollector, if available in the chain config.
+	if st.evm.ChainConfig().Taiko && st.evm.ChainConfig().FeeCollector != nil {
+		return *st.evm.ChainConfig().FeeCollector
+	}
+	return common.Address{}
 }
 
 // CHANGE(taiko): decodes an ontake block's extradata, returns basefeeSharingPctg configurations,
